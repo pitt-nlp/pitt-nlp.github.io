@@ -1,0 +1,335 @@
+{
+  "_note": "People directory for the Pitt NLP+CL site. Core and affiliated faculty are real. Student and alumni entries with the surnames Doe/Roe/Major/Noakes are PLACEHOLDERS — replace or delete them. Faculty fields: name, title, department (key into `departments`), website, lab_website, lab_name, image, alt. Optional overrides: department_name, department_url. Student fields: name, title, website (optional). Alumni fields: name, year, degree, department, current, website.",
+
+  "departments": {
+    "CS": {
+      "name": "Department of Computer Science",
+      "short": "Computer Science",
+      "url": "https://www.cs.pitt.edu/"
+    },
+    "IS": {
+      "name": "Department of Informatics and Networked Systems",
+      "short": "Information Science",
+      "url": "https://www.sci.pitt.edu/"
+    },
+    "ISP": {
+      "name": "Intelligent Systems Program",
+      "short": "Intelligent Systems",
+      "url": "https://www.isp.pitt.edu/"
+    },
+    "LING": {
+      "name": "Department of Linguistics",
+      "short": "Linguistics",
+      "url": "https://www.linguistics.pitt.edu/"
+    },
+    "PSY": {
+      "name": "Department of Psychology",
+      "short": "Psychology",
+      "url": "https://www.psychology.pitt.edu/"
+    },
+    "DBMI": {
+      "name": "Department of Biomedical Informatics",
+      "short": "Biomedical Informatics",
+      "url": "https://www.dbmi.pitt.edu/"
+    }
+  },
+
+  "faculty": {
+    "core": [
+      {
+        "name": "Diane Litman",
+        "title": "Professor",
+        "department": "CS",
+        "website": "https://people.cs.pitt.edu/~litman/",
+        "lab_website": "https://petal-cs-pitt.github.io/",
+        "lab_name": "Lab",
+        "image": "images/diane.png",
+        "alt": "Portrait of Diane Litman"
+      },
+      {
+        "name": "Lorraine Xiang Li",
+        "title": "Assistant Professor",
+        "department": "CS",
+        "website": "https://lorraine333.github.io/",
+        "lab_website": "https://lorraine333.github.io/group/",
+        "lab_name": "Lab",
+        "image": "images/lorraine.jpg",
+        "alt": "Portrait of Lorraine Xiang Li"
+      },
+      {
+        "name": "Janet Liu",
+        "title": "Assistant Professor",
+        "department": "LING",
+        "website": "https://janetlauyeung.github.io/",
+        "lab_website": "",
+        "lab_name": "Lab",
+        "image": "images/janet.webp",
+        "alt": "Portrait of Janet Liu"
+      }
+    ],
+
+    "affiliated": [
+      {
+        "name": "Daqing He",
+        "title": "Professor",
+        "department": "IS",
+        "website": "https://www.sci.pitt.edu/people/daqing-he",
+        "lab_website": "",
+        "lab_name": "",
+        "image": "images/affiliated/daqing-he.jpg",
+        "alt": "Portrait of Daqing He"
+      },
+      {
+        "name": "Nils Murrugarra-Llerena",
+        "title": "Teaching Assistant Professor",
+        "department": "CS",
+        "website": "https://www.sci.pitt.edu/people/nils-murrugarra-llerena",
+        "lab_website": "",
+        "lab_name": "",
+        "image": "images/affiliated/nils-murrugarra-llerena.jpg",
+        "alt": "Portrait of Nils Murrugarra-Llerena"
+      },
+      {
+        "name": "Erin Walker",
+        "title": "Professor",
+        "department": "CS",
+        "website": "https://www.sci.pitt.edu/people/erin-walker",
+        "lab_website": "https://www.facetlab.pitt.edu/",
+        "lab_name": "Lab",
+        "image": "images/affiliated/erin-walker.jpg",
+        "alt": "Portrait of Erin Walker"
+      },
+      {
+        "name": "Michael Miller Yoder",
+        "title": "Teaching Assistant Professor",
+        "department": "CS",
+        "website": "https://www.sci.pitt.edu/people/michael-miller-yoder",
+        "lab_website": "",
+        "lab_name": "",
+        "image": "images/affiliated/michael-miller-yoder.jpg",
+        "alt": "Portrait of Michael Miller Yoder"
+      },
+      {
+        "name": "Yanshan Wang",
+        "title": "Associate Professor",
+        "department": "DBMI",
+        "website": "https://www.sci.pitt.edu/people/yanshan-wang",
+        "lab_website": "",
+        "lab_name": "",
+        "image": "images/affiliated/yanshan-wang.jpg",
+        "alt": "Portrait of Yanshan Wang"
+      },
+      {
+        "name": "Peter Brusilovsky",
+        "title": "Professor",
+        "department": "IS",
+        "website": "https://www.sci.pitt.edu/people/peter-brusilovsky",
+        "lab_website": "https://adapt2.sis.pitt.edu/wiki/PAWS",
+        "lab_name": "Lab",
+        "image": "images/affiliated/peter-brusilovsky.jpg",
+        "alt": "Portrait of Peter Brusilovsky"
+      },
+      {
+        "name": "Raquel Coelho",
+        "title": "Assistant Professor",
+        "department": "IS",
+        "website": "https://www.sci.pitt.edu/people/raquel-coelho",
+        "lab_website": "",
+        "lab_name": "",
+        "image": "images/affiliated/raquel-coelho.jpg",
+        "alt": "Portrait of Raquel Coelho"
+      },
+      {
+        "name": "Adriana Kovashka",
+        "title": "Associate Professor",
+        "department": "CS",
+        "website": "https://www.sci.pitt.edu/people/adriana-i-kovashka",
+        "lab_website": "",
+        "lab_name": "",
+        "image": "images/affiliated/adriana-kovashka.jpg",
+        "alt": "Portrait of Adriana Kovashka"
+      },
+      {
+        "name": "Paul Cohen",
+        "title": "Professor",
+        "department": "CS",
+        "website": "https://www.sci.pitt.edu/people/paul-cohen",
+        "lab_website": "",
+        "lab_name": "",
+        "image": "images/affiliated/paul-cohen.jpg",
+        "alt": "Portrait of Paul Cohen"
+      },
+      {
+        "name": "Xiaowei Jia",
+        "title": "Associate Professor",
+        "department": "CS",
+        "website": "https://www.sci.pitt.edu/people/xiaowei-jia",
+        "lab_website": "",
+        "lab_name": "",
+        "image": "images/affiliated/xiaowei-jia.jpg",
+        "alt": "Portrait of Xiaowei Jia"
+      },
+      {
+        "name": "Yu-Ru Lin",
+        "title": "Professor",
+        "department": "IS",
+        "website": "https://www.sci.pitt.edu/people/yu-ru-lin",
+        "lab_website": "https://picsolab.github.io/",
+        "lab_name": "Lab",
+        "image": "images/affiliated/yu-ru-lin.jpg",
+        "alt": "Portrait of Yu-Ru Lin"
+      },
+      {
+        "name": "Ryan Shi",
+        "title": "Assistant Professor",
+        "department": "CS",
+        "website": "https://www.sci.pitt.edu/people/ryan-shi",
+        "lab_website": "",
+        "lab_name": "",
+        "image": "images/affiliated/ryan-shi.jpg",
+        "alt": "Portrait of Ryan Shi"
+      }
+    ]
+  },
+  "students": {
+      "CS": [
+        {
+          "name": "Zhuowei (Johnny) Chen",
+          "title": "PhD",
+          "website": "https://johnnychanv.github.io/",
+          "areas": ["LLM Reasoning", "Interpretability", "Efficient NLP"]
+        },
+        {
+          "name": "Zhaoyi (Joey) Hou",
+          "title": "PhD",
+          "website": "https://joeyhou.github.io/",
+          "areas": ["LLM Evaluation", "Computational Creativity"]
+        },
+        {
+          "name": "Yang Zhong",
+          "title": "PhD",
+          "website": "https://yangzhongcs.com/",
+          "areas": ["Text Summarization", "Discourse & Argumentation", "Multimodal Learning"]
+        },
+        {
+          "name": "Shayan Peyghambari Oskoui",
+          "title": "PhD",
+          "website": "https://www.linkedin.com/in/shayan-peyghambari-002659196/",
+          "areas": ["NLP for Education", "LLM Evaluation"]
+        },
+        {
+          "name": "Bhiman Kumar Baghel",
+          "title": "PhD",
+          "website": "https://bhimanbaghel.github.io/",
+          "areas": ["LLM Reasoning", "Interpretability"]
+        },
+        {
+          "name": "Shamika Likhite",
+          "title": "PhD",
+          "website": "https://www.linkedin.com/in/shamika-likhite0904/",
+          "areas": ["NLP for Education", "Multimodal Learning"]
+        },
+        {
+          "name": "Ziwei Quan",
+          "title": "PhD",
+          "website": "https://www.linkedin.com/in/ziwei-quan-045353293/",
+          "areas": []
+        },
+        {
+          "name": "Jatin Khilnani",
+          "title": "PhD",
+          "website": "https://www.linkedin.com/in/jatinkhilnani",
+          "areas": ["Interpretability", "Responsible AI"]
+        },
+        {
+          "name": "Alejandro Ciuba",
+          "title": "PhD",
+          "website": "https://alejandrociuba.github.io/",
+          "areas": ["Human-Computer Interaction", "NLP for Education"]
+        },
+        {
+          "name": "Norah Almousa",
+          "title": "PhD",
+          "website": "",
+          "areas": ["NLP for Education", "LLM Evaluation"]
+        }
+      ],
+      "IS": [
+        {
+          "name": "Andrew Aquilina",
+          "title": "PhD",
+          "website": "https://andaqu.github.io/",
+          "areas": ["NLP for Health", "Responsible AI", "Computational Social Science"]
+        },
+        {
+          "name": "Zhuochun Li",
+          "title": "PhD",
+          "website": "https://zhuochunli.github.io/",
+          "areas": ["LLM Reasoning", "Efficient NLP", "LLM Evaluation"]
+        }
+      ],
+      "ISP": [
+        {
+          "name": "Yuya Asano",
+          "title": "PhD",
+          "website": "https://sites.pitt.edu/~yua17/",
+          "areas": ["NLP for Education", "Dialogue Systems"]
+        },
+        {
+          "name": "Nya Feinstein",
+          "title": "PhD",
+          "website": "https://nyafein.github.io/",
+          "areas": ["Computational Social Science", "Multilingual NLP"]
+        },
+        {
+          "name": "Manurag Khullar",
+          "title": "PhD",
+          "website": "https://www.linkedin.com/in/manuragkhullar/",
+          "areas": ["Multilingual NLP", "Responsible AI", "NLP for Health"]
+        },
+        {
+          "name": "Arun Balajiee Lekshmi Narayanan",
+          "title": "PhD",
+          "website": "https://a2un.github.io/",
+          "areas": ["NLP for Education", "Human-Computer Interaction"]
+        }
+      ],
+      "LING": [
+        {
+          "name": "Zhuoxuan Ju",
+          "title": "PhD",
+          "website": "https://junymphea.github.io/",
+          "areas": ["Discourse & Argumentation"]
+        }
+      ]
+    },
+    "alumni": [
+      {
+        "name": "Mohamed Salem Elaraby",
+        "year": "2026",
+        "degree": "PhD",
+        "department": "CS",
+        "current": "Senior Applied Scientist, Zillow Group",
+        "website": "https://engsalem.github.io/",
+        "areas": ["Text Summarization", "Discourse & Argumentation"]
+      },
+      {
+        "name": "César Guerra-Solano",
+        "year": "2026",
+        "degree": "BPhil",
+        "department": "CS",
+        "current": "PhD Student in Computer Sciences, University of Wisconsin–Madison",
+        "website": "https://cgsol.github.io/",
+        "areas": ["LLM Evaluation", "Multilingual NLP"]
+      },
+      {
+        "name": "Zhexiong Liu",
+        "year": "2025",
+        "degree": "PhD",
+        "department": "CS",
+        "current": "Data & Applied Scientist II, Microsoft",
+        "website": "https://people.cs.pitt.edu/~zhexiong/",
+        "areas": ["NLP for Education", "Multimodal Learning", "Interpretability"]
+      }
+    ]
+}

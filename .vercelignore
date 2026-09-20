@@ -1,0 +1,8 @@
+node_modules
+package-lock.json
+_incoming-directory
+.playwright
+terminals
+agent-transcripts
+tmp-*.png
+images/_faculty-check.png

@@ -1,0 +1,12 @@
+{
+  "_note": "News items shown in the hero panel. Newest first is recommended, but the site sorts by date anyway. Fields: date (YYYY-MM-DD), title, url (optional), category (optional short label). Also paste the same items into the News list in index.html so they appear on first paint instead of after the JSON loads.",
+
+  "items": [
+    {
+      "date": "2026-08-24",
+      "category": "Group",
+      "title": "We welcome our incoming PhD cohort for the 2026\u201327 academic year! Welcome Shamika and Zhuoxuan!",
+      "url": ""
+    }
+  ]
+}

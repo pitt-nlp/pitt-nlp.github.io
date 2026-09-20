@@ -1,0 +1,42 @@
+{
+  "_note": "Courses shown on the Classes tab. Listed in the order given here. Fields: numbers (string, e.g. 'CS 1671 / CS 2071'), title, url (optional, links the title), level, focus, note (optional, small print under the focus). To add a course, append an object to `courses` — no code or CSS changes needed.",
+
+  "courses": [
+    {
+      "numbers": "CS 1671 / CS 2071",
+      "title": "Human Language Technologies",
+      "url": "https://courses.sci.pitt.edu/courses/view/CS-1671",
+      "focus": "Introduction to NLP, with applications in speech recognition, dialogue, question answering, and machine translation."
+    },
+    {
+      "numbers": "CS 2731 / ISSP 2230",
+      "title": "Introduction to Natural Language Processing",
+      "url": "https://courses.sci.pitt.edu/courses/view/CS-2731",
+      "focus": "Computational approaches to syntax, semantics, and pragmatics using statistical and knowledge-based methods."
+    },
+    {
+      "numbers": "CS 3730 / ISSP 3120",
+      "title": "Advanced Topics in Natural Language Processing",
+      "url": "https://courses.sci.pitt.edu/courses/view/CS-3730",
+      "focus": "Selected NLP research topics and recent advances; content varies by offering."
+    },
+    {
+      "numbers": "LING 1330 / LING 2330",
+      "title": "Introduction to Computational Linguistics",
+      "url": "https://sites.pitt.edu/~naraehan/ling1330/",
+      "focus": "Practical language processing with Python and NLTK, including tagging, parsing, classification, and corpus exploration."
+    },
+    {
+      "numbers": "LING 1340 / LING 2340",
+      "title": "Data Science for Linguists",
+      "url": "https://naraehan.github.io/Data-Science-for-Linguists-2024/",
+      "focus": "Processing linguistic datasets, text analytics, statistical language modeling, and machine learning."
+    },
+    {
+      "numbers": "CMPINF 2223",
+      "title": "Large Language Models (LLMs) and Their Applications",
+      "url": "https://courses.sci.pitt.edu/courses/view/CMPINF-2223",
+      "focus": "Evolution of NLP, neural language models, transformers, and social and ethical issues surrounding LLMs."
+    }
+  ]
+}

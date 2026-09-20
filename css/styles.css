@@ -1,0 +1,1793 @@
+/* ==========================================================================
+   Pitt NLP+CL
+   1. Tokens
+   2. Reset & base
+   3. Header & navigation
+   4. Hero: sky, Cathedral
+   5. News panel
+   6. Content region & section furniture
+   7. Faculty
+   8. Students
+   9. Alumni
+   10. Classes
+   11. Talks
+   12. Responsive
+   13. Reduced motion & print
+   ========================================================================== */
+
+/* ------------------------------- 1. Tokens ------------------------------- */
+
+:root {
+  /* Pitt identity */
+  --pitt-blue: #003594;
+  --pitt-blue-deep: #002469;
+  --pitt-navy: #001634;
+  --gold: #ffb81c;
+  --gold-deep: #a8730a;
+  /* Gold dark enough to carry text on the pale end of the sky gradient
+     (#a8730a only reached 2.6:1 there; this clears 5:1). */
+  --gold-ink: #6b4906;
+  --gold-ink-strong: #4f3604;
+
+  /* Ink & paper */
+  --ink: #17202a;
+  --ink-soft: #46515f;
+  --ink-faint: #6d7784;
+  --paper: #f8f8f5;
+  --surface: #ffffff;
+  --rule: rgba(23, 32, 42, 0.13);
+  --rule-strong: rgba(23, 32, 42, 0.24);
+
+  /* Sky (hero) — light blue held through the Cathedral, then meeting
+     the page paper. */
+  --sky-1: #8ebde6;
+  --sky-2: #a8ceec;
+  --sky-3: #c4def2;
+  --sky-4: #d8eaf6;
+
+  /* Layout */
+  --shell: 1360px;
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --header-h: 74px;
+
+  /* Group-photo frame. Both photographs are normalised to this ratio by
+     tools/prep-images.mjs, so the slide fills its frame exactly: no
+     letterboxing, both slides the same size, and the photo's edges land flush
+     with the news panel below it. Keep in sync with GROUP_RATIO there. */
+  --group-ratio: 2.903;
+
+  /* Type */
+  --serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --hero-sans: "Source Sans 3", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* --------------------------- 2. Reset & base ---------------------------- */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* Native anchor jumps and keyboard focus clear the fixed header. */
+  scroll-padding-top: calc(var(--header-h) + 1.5rem);
+}
+
+body {
+  margin: 0;
+  /* Safety net: a single mis-sized child should never give the whole page a
+     horizontal scrollbar on a phone. */
+  overflow-x: clip;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-tap-highlight-color: rgb(0 53 148 / 0.14);
+  font-family: var(--sans);
+  font-size: clamp(1rem, 0.96rem + 0.18vw, 1.0625rem);
+  line-height: 1.65;
+  font-feature-settings: "kern" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+main:focus { outline: none; }
+
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p { margin: 0 0 1em; }
+p:last-child { margin-bottom: 0; }
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+a {
+  color: var(--pitt-blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+  transition: color 0.18s var(--ease);
+}
+
+a:hover { color: var(--pitt-blue-deep); text-decoration-color: var(--gold); }
+
+:focus-visible {
+  outline: 2px solid var(--pitt-blue);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 200;
+  padding: 0.65rem 1.1rem;
+  background: var(--pitt-blue);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0 0 3px 3px;
+  transition: top 0.2s var(--ease);
+}
+.skip-link:focus { top: 0; color: #fff; }
+
+.link-arrow {
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: 2px;
+  transition: border-color 0.2s var(--ease), color 0.18s var(--ease);
+}
+.link-arrow::after {
+  content: "\2009\2192";
+  display: inline-block;
+  transition: transform 0.24s var(--ease);
+}
+.link-arrow:hover { border-bottom-color: var(--gold); }
+.link-arrow:hover::after { transform: translateX(3px); }
+
+.notice {
+  max-width: 60ch;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
+  border-left: 3px solid var(--gold);
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+  box-shadow: 0 1px 3px rgba(23, 32, 42, 0.06);
+}
+
+/* --------------------- 3. Header & navigation --------------------------- */
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  transition: background-color 0.3s var(--ease), box-shadow 0.3s var(--ease),
+              border-color 0.3s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+
+.site-header.is-scrolled {
+  background: rgba(248, 248, 245, 0.9);
+  border-bottom-color: var(--rule);
+  box-shadow: 0 1px 16px rgba(23, 32, 42, 0.06);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .site-header.is-scrolled {
+    background: rgba(248, 248, 245, 0.72);
+    backdrop-filter: blur(14px) saturate(140%);
+  }
+}
+
+.site-header__inner {
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding: 0 var(--gutter);
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  text-decoration: none;
+  border-radius: 3px;
+}
+.brand__mark {
+  height: calc(var(--header-h) - 16px);
+  width: auto;
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  display: block;
+  transition: opacity 0.2s var(--ease);
+}
+.brand:hover .brand__mark { opacity: 0.82; }
+
+.nav__list {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.25rem, 2.6vw, 2.5rem);
+}
+
+.nav__link {
+  position: relative;
+  display: inline-block;
+  padding: 0.4rem 0;
+  color: var(--pitt-blue);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav__link[aria-current] {
+  color: var(--pitt-blue-deep);
+  font-weight: 600;
+}
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  /* 44px minimum tap target; the negative margin keeps the bars optically
+     aligned with the gutter despite the wider hit area. */
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  margin-right: -0.75rem;
+  background: none;
+  border: 0;
+  color: var(--pitt-blue);
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.nav-toggle__bars {
+  position: relative;
+  width: 20px;
+  height: 12px;
+  flex: 0 0 auto;
+}
+.nav-toggle__bars::before,
+.nav-toggle__bars::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.26s var(--ease), opacity 0.2s var(--ease);
+}
+.nav-toggle__bars::before { top: 1px; }
+.nav-toggle__bars::after { bottom: 1px; }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars::before { transform: translateY(4.5px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars::after { transform: translateY(-5px) rotate(-45deg); }
+
+/* --------------- 4. Hero: sky and Cathedral ----------------------------- */
+
+.hero {
+  --hero-progress: 0;
+  --hero-fade: clamp(5rem, 12vh, 8rem);
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  /*
+   * Aims for one screen, but grows rather than crops.
+   *
+   * This was a fixed `height: 100svh`. Because the photo frame carried
+   * `min-height: 0`, the hero grid was free to shrink it below the
+   * photograph's own height whenever the copy, photo and news together
+   * needed more room than the screen had — and `overflow: hidden` on the
+   * slider then silently cut the overflow off the bottom. On a 1366x768
+   * laptop that cost 18px, on a 1280x720 one 72px, and in phone landscape
+   * the whole photograph. The bottom edge is where the seated front row's
+   * faces sit, so those were the first thing to go.
+   *
+   * `display: grid` stretches .hero__inner to fill the hero on a tall
+   * screen, while min-height lets the hero outgrow the viewport on a short
+   * one. Nothing is ever clipped.
+   */
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  background: linear-gradient(
+    180deg,
+    var(--sky-1) 0%,
+    var(--sky-2) 36%,
+    var(--sky-3) 72%,
+    var(--sky-4) 100%
+  );
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: var(--hero-fade);
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(180deg, rgb(248 248 245 / 0), var(--paper));
+}
+
+.hero__inner {
+  box-sizing: border-box;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding: calc(var(--header-h) + clamp(1rem, 2.5vh, 1.75rem)) var(--gutter)
+           clamp(1.25rem, 3vh, 2rem);
+  /* Height comes from the hero's grid stretch, so this fills a tall screen
+     and grows past a short one. A percentage height here would collapse now
+     that the hero is no longer a fixed 100svh. */
+  display: grid;
+  grid-template-columns: minmax(11rem, 0.8fr) minmax(0, 2.2fr);
+  gap: clamp(1.25rem, 3vw, 3rem);
+  align-items: stretch;
+}
+
+/* The Cathedral. A transparent cutout, so the sky gradient shows through
+   around it. Height follows the stacked photo + news column so the tower
+   cannot force a band of empty sky below the content. */
+.hero__figure {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  justify-self: center;
+  align-self: stretch;
+  height: 0;
+  min-height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  will-change: transform;
+  transform: translate3d(0, calc(var(--hero-progress) * 58px), 0);
+}
+
+.hero__cathedral-stack {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__cathedral-stack picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__cathedral {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.hero__main {
+  position: relative;
+  z-index: 4;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-family: var(--hero-sans);
+}
+
+/*
+ * No `min-height: 0` on either of these. As flex items they default to a
+ * min-content floor, which is what keeps the photo row at its natural height
+ * instead of letting a short viewport squeeze it.
+ */
+.hero__pair {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "copy"
+    "photo"
+    "news";
+  row-gap: clamp(0.9rem, 2vh, 1.5rem);
+  align-items: stretch;
+}
+
+.slider {
+  grid-area: photo;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  min-width: 0;
+  height: auto;
+  /*
+   * No `min-height: 0` and no `overflow: hidden` here. Together those two let
+   * the hero grid shrink this box below the photograph and then hide the
+   * remainder, cropping faces off the bottom edge. The carousel's clipping
+   * belongs to .slider__viewport, which only ever needs to clip sideways.
+   */
+}
+
+.slider__viewport {
+  position: relative;
+  flex: none;
+  min-width: 0;
+  width: 100%;
+  height: auto;
+  /* Both photographs are normalised to this ratio, so the slide fills the
+     frame exactly and sits flush with the news panel below. */
+  aspect-ratio: var(--group-ratio);
+  overflow: hidden;
+  overflow: clip;
+  isolation: isolate;
+  background: transparent;
+}
+
+.slider__track {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  will-change: transform;
+}
+
+.slider:not(.is-ready) .slider__slide:not(.is-initial) {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.slider__slide {
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  display: block;
+}
+
+.slider__slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: contain;
+  object-position: center;
+  user-select: none;
+  pointer-events: none;
+}
+
+.slider__btn {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  transform: translateY(-50%);
+  filter: drop-shadow(0 1px 3px rgb(0 12 28 / 0.55));
+  -webkit-tap-highlight-color: transparent;
+}
+
+.slider__btn svg {
+  display: block;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.slider__btn--prev { left: 0.1rem; }
+.slider__btn--next { right: 0.1rem; }
+.slider__btn:hover { color: var(--gold); }
+.slider__btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Horizontal drag is claimed by the slider; vertical panning stays with the
+   page so a swipe down the photo still scrolls. */
+.slider.is-ready .slider__viewport {
+  touch-action: pan-y;
+  cursor: grab;
+}
+.slider.is-dragging .slider__viewport { cursor: grabbing; }
+.slider.is-dragging .slider__track { transition: none !important; }
+
+/* Position dots. Built by the slider script, so they never appear without JS
+   (in which case the first photo simply shows on its own). A touch affordance,
+   so they are scoped to small screens; on desktop the arrows are always
+   visible. */
+.slider__dots {
+  display: none;
+  flex-shrink: 0;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.slider__dot {
+  width: 44px;
+  height: 32px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.slider__dot::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgb(0 22 52 / 0.28);
+  transition: background-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.slider__dot[aria-current="true"]::before {
+  background: var(--pitt-blue);
+  transform: scale(1.25);
+}
+.slider__dot:hover::before { background: var(--gold-deep); }
+
+.hero__copy {
+  grid-area: copy;
+}
+
+.hero__title {
+  margin: 0 0 0.55rem;
+  max-width: 22em;
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 1.12rem + 0.95vw, 1.85rem);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  color: var(--pitt-navy);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slider__track { transition: none !important; }
+}
+
+.hero__lede {
+  margin: 0;
+  max-width: 42rem;
+  font-family: var(--hero-sans);
+  font-size: clamp(1.25rem, 1.1rem + 0.7vw, 1.55rem);
+  line-height: 1.45;
+  color: var(--pitt-blue-deep);
+  hyphens: none;
+}
+
+.hero__cta {
+  margin: 0.85rem 0 0;
+  font-family: var(--hero-sans);
+}
+.hero__cta .link-arrow {
+  color: var(--gold-ink);
+  border-bottom-color: rgb(107 73 6 / 0.45);
+}
+.hero__cta .link-arrow:hover {
+  color: var(--gold-ink-strong);
+  border-bottom-color: var(--gold-ink-strong);
+}
+
+/* Widens the tap area to the 44px guideline without shifting the underline. */
+.link-arrow { position: relative; }
+.link-arrow::before {
+  content: "";
+  position: absolute;
+  inset: -0.8rem -0.5rem;
+}
+
+/* ------------------------- 5. News panel -------------------------------- */
+
+.news {
+  grid-area: news;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  /* Slightly longer than before: a deeper band with more room around the
+     items, and a floor so a single short item still reads as a band rather
+     than a strip. */
+  min-height: clamp(9rem, 15vh, 11.5rem);
+  margin: 0;
+  padding: 1.5rem 1.5rem 1.55rem;
+  /* Pitt navy rather than black: in palette, and dense enough that the body
+     text, meta line, and gold tag all clear 4.5:1 even where the sky behind
+     is at its lightest. The earlier 42% black gave 3.4:1 and 2.2:1. */
+  background: rgba(0, 22, 52, 0.78);
+  color: #e9edf2;
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .news {
+    background: rgba(0, 22, 52, 0.72);
+    backdrop-filter: blur(10px);
+  }
+}
+
+/*
+ * Items run across the panel rather than down it. `grid-auto-flow: column`
+ * makes exactly as many equal columns as there are items, so two items split
+ * the band in half and four split it in quarters — no empty tracks, and the
+ * row always fills the measure. Below 901px the columns get too narrow to
+ * read, so the flow turns and items pair up two across instead.
+ */
+.news__list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 1rem 1.6rem;
+}
+
+/* Hairline between neighbours in the row. */
+.news__item + .news__item {
+  padding-left: 1.6rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 900px) {
+  .news__list {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.15rem;
+  }
+  .news__item + .news__item {
+    padding-left: 1.15rem;
+  }
+  /* First item of each pair starts a row, so it carries no rule. */
+  .news__item:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  /* Third item onwards sits on a second row and needs a rule above it. */
+  .news__item:nth-child(n + 3) {
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}
+
+/*
+ * Under 560px two columns leave about nine characters a line, so the row
+ * turns into a stack. Both items stay on screen — the alternative, a
+ * side-by-side row that has to be swiped, would hide the second one.
+ */
+@media (max-width: 559px) {
+  .news__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .news__item + .news__item,
+  .news__item:nth-child(n + 3) {
+    padding-left: 0;
+    padding-top: 0.95rem;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}
+
+.news__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 0.18rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  color: rgba(233, 237, 242, 0.82);
+}
+
+.news__tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.news__text {
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: #eef2f7;
+}
+
+.news__link {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.38);
+  text-decoration-thickness: 1px;
+}
+.news__link:hover {
+  color: #fff;
+  text-decoration-color: var(--gold);
+}
+
+/* ------------- 6. Content region & section furniture -------------------- */
+
+.content {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+  padding-bottom: clamp(4rem, 9vh, 7rem);
+}
+
+.content > .notice { position: relative; z-index: 1; margin-top: 2rem; }
+
+.view {
+  position: relative;
+  z-index: 1;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.view--entering { animation: view-in 0.44s var(--ease) both; }
+
+@keyframes view-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.section { padding-block: clamp(3.25rem, 7vh, 5.5rem); }
+
+.view > .section:first-child { padding-top: clamp(3.25rem, 7vh, 5.5rem); }
+
+.section + .section { border-top: 1px solid var(--rule); }
+
+.section__head {
+  max-width: 46rem;
+  margin-bottom: clamp(2rem, 4vh, 3rem);
+}
+
+.section__title {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  color: var(--pitt-navy);
+  letter-spacing: -0.02em;
+}
+
+.section__title--sub {
+  font-size: clamp(1.375rem, 2.1vw, 1.75rem);
+  color: var(--ink);
+}
+
+.section__note {
+  margin: 1rem 0 0;
+  max-width: 60ch;
+  font-size: 0.96875rem;
+  color: var(--ink-faint);
+}
+
+.talks-subscribe {
+  margin: 1rem 0 0;
+}
+
+/* ------------------------- 7. Faculty ----------------------------------- */
+
+.faculty-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: clamp(1.75rem, 3vw, 2.75rem) clamp(1.5rem, 2.4vw, 2.25rem);
+}
+
+.faculty-grid--compact {
+  grid-template-columns: repeat(auto-fill, minmax(178px, 1fr));
+  gap: clamp(1.5rem, 2.4vw, 2.25rem) clamp(1.25rem, 2vw, 2rem);
+}
+
+.person {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.person__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  margin-bottom: 1.05rem;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #e7e9e3;
+}
+
+.person__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.person__monogram {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(155deg, #dfe5ea 0%, #cdd6dd 100%);
+  color: var(--pitt-blue);
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.faculty-grid--compact .person__media { aspect-ratio: 1 / 1; margin-bottom: 0.9rem; }
+
+.person__name {
+  font-size: clamp(1.0625rem, 1.35vw, 1.1875rem);
+  font-weight: 600;
+  line-height: 1.28;
+  margin-bottom: 0.3rem;
+}
+
+.person__name a {
+  color: var(--pitt-navy);
+  text-decoration: none;
+}
+
+/* Makes the whole card activate the name link while keeping the department
+   link independently clickable. */
+.person__name a[data-cover]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.person__title {
+  margin: 0 0 0.15rem;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+
+.person__dept {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.person__dept a {
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-decoration-color: rgba(23, 32, 42, 0.28);
+}
+.person__dept a:hover { color: var(--pitt-blue); text-decoration-color: var(--gold); }
+
+.person__lab {
+  position: relative;
+  z-index: 1;
+  margin: 0.55rem 0 0;
+  font-size: 0.8125rem;
+}
+.person__lab a {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule-strong);
+}
+.person__lab a:hover { border-bottom-color: var(--gold); }
+
+/* Text-only fallback listing for affiliated faculty without photographs. */
+.faculty-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem clamp(1.5rem, 3vw, 3rem);
+}
+
+.faculty-list .person__media { display: none; }
+
+/* ------------------------- 8. Students ---------------------------------- */
+
+.students-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 4vh, 3.25rem) clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.students-col {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 4vh, 3.25rem);
+}
+
+.student-group__heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding-bottom: 0.7rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--rule-strong);
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pitt-blue);
+}
+
+.student-group__heading a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.student-group__heading a:hover { border-bottom-color: var(--gold); }
+
+.student-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.34rem 0;
+  font-size: 1rem;
+}
+
+.student-list__name { color: var(--ink); }
+
+.student-list a.student-list__name {
+  color: var(--pitt-navy);
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 22, 52, 0.26);
+}
+.student-list a.student-list__name:hover {
+  color: var(--pitt-blue);
+  text-decoration-color: var(--gold);
+}
+
+.student-list__degree {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ---- Research-area filter ---------------------------------------------
+ * Pressing a chip fades the students who do not work in that area. Idle
+ * chips are hairline rectangles in Pitt blue — the same furniture language
+ * as the rest of the page — so the row reads as a filter, not a tag cloud.
+ */
+
+/* With chips in between, the heading belongs closer to them than the
+   full section gap allows. Set by JS only when chips are actually built. */
+.section--filtered > .section__head {
+  margin-bottom: clamp(1.1rem, 2.2vh, 1.6rem);
+}
+
+.area-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.45rem;
+  margin-bottom: clamp(1.75rem, 3.5vh, 2.5rem);
+}
+
+.area-filter__label {
+  flex: 1 0 100%;
+  margin: 0 0 0.15rem;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.area-filter__track {
+  position: relative;
+  flex: 1 0 100%;
+  min-width: 0;
+}
+
+.area-filter__scroller {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.45rem;
+}
+
+/* Paper → transparent, not black → transparent: Safari interpolates
+   `transparent` as transparent-black and the fade would go grey. */
+.area-filter__track::before,
+.area-filter__track::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  width: 2.75rem;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.18s var(--ease);
+}
+.area-filter__track::before {
+  left: 0;
+  background: linear-gradient(to right, var(--paper), rgb(248 248 245 / 0));
+}
+.area-filter__track::after {
+  right: 0;
+  background: linear-gradient(to left, var(--paper), rgb(248 248 245 / 0));
+}
+.area-filter__track.is-overflow-start::before,
+.area-filter__track.is-overflow-end::after {
+  opacity: 1;
+}
+
+.area-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.32rem 0.7rem;
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+  color: var(--pitt-blue);
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.18s var(--ease), color 0.18s var(--ease),
+              border-color 0.18s var(--ease);
+}
+
+.area-chip:hover {
+  border-color: var(--pitt-blue);
+  color: var(--pitt-blue-deep);
+}
+
+.area-chip[aria-pressed="true"] {
+  background: var(--pitt-blue);
+  border-color: var(--pitt-blue);
+  color: #fff;
+}
+
+.area-chip:focus-visible {
+  outline: 2px solid var(--pitt-blue);
+  outline-offset: 2px;
+}
+
+/* ---- Dimmed state ---- */
+
+.student-list li,
+.student-group__heading,
+.student-group__heading a {
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease),
+              text-decoration-color 0.2s var(--ease);
+}
+
+.student-list li.is-dimmed .student-list__name,
+.student-list li.is-dimmed .student-list__degree {
+  color: #b4b9c1;
+}
+
+.student-list li.is-dimmed a.student-list__name {
+  text-decoration-color: rgba(180, 185, 193, 0.55);
+}
+
+/* Faded is not unavailable: these people are still worth a click. */
+.student-list li.is-dimmed a.student-list__name:hover,
+.student-list li.is-dimmed a.student-list__name:focus-visible {
+  color: var(--pitt-blue);
+  text-decoration-color: var(--gold);
+}
+
+.student-group.is-dimmed .student-group__heading,
+.student-group.is-dimmed .student-group__heading a {
+  color: #b4b9c1;
+  border-bottom-color: rgba(180, 185, 193, 0.4);
+}
+
+/* --------------------------- 9. Alumni ---------------------------------- */
+
+.alumni {
+  border-top: 1px solid var(--rule);
+}
+
+.alumni__row {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 11rem) minmax(0, 1fr);
+  gap: 0.35rem 1.75rem;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.96875rem;
+}
+
+.alumni__name { font-weight: 500; color: var(--ink); }
+.alumni__name a {
+  color: var(--pitt-navy);
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 22, 52, 0.26);
+}
+.alumni__name a:hover { color: var(--pitt-blue); text-decoration-color: var(--gold); }
+
+.alumni__origin { color: var(--ink-faint); font-size: 0.90625rem; }
+
+.alumni__current {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--ink-faint);
+  font-size: 0.90625rem;
+}
+
+.alumni__to {
+  flex: none;
+  width: 1.45rem;
+  height: 1.45rem;
+  color: var(--pitt-blue);
+}
+
+.alumni__row[hidden] { display: none; }
+
+.alumni__more {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.1rem;
+  background: none;
+  border: 1px solid var(--rule-strong);
+  border-radius: 2px;
+  color: var(--pitt-blue);
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+.alumni__more:hover { border-color: var(--gold); background: rgba(255, 184, 28, 0.08); }
+
+/* --------------------------- 10. Classes -------------------------------- */
+
+/*
+ * A course list, not a table: the same two-column row the alumni and archive
+ * listings use, so the Classes tab reads as part of the same page. Course
+ * number and level sit in the narrow column, title and description in the
+ * wide one. No header row, matching the other listings — the content says
+ * what it is.
+ */
+
+.classes { border-top: 1px solid var(--rule); }
+
+.class-row {
+  display: grid;
+  grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+  gap: 0.4rem clamp(1.5rem, 3vw, 3rem);
+  align-items: start;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.class__code {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  color: var(--pitt-blue);
+}
+
+.class__level {
+  margin: 0.3rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--ink-faint);
+}
+
+.class__title {
+  margin: 0 0 0.35rem;
+  font-family: var(--serif);
+  font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+  font-weight: 600;
+  line-height: 1.32;
+  color: var(--pitt-navy);
+}
+
+.class__title a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 22, 52, 0.26);
+}
+.class__title a:hover { color: var(--pitt-blue); text-decoration-color: var(--gold); }
+
+.class__focus {
+  margin: 0;
+  max-width: 62ch;
+  font-size: 0.96875rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.class__note {
+  margin: 0.4rem 0 0;
+  font-size: 0.84375rem;
+  color: var(--ink-faint);
+}
+
+/* ---------------------------- 11. Talks --------------------------------- */
+
+.talks { display: flex; flex-direction: column; }
+
+.talk {
+  display: grid;
+  grid-template-columns: minmax(0, 15.5rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3.5vw, 3.5rem);
+  align-items: start;
+  padding-block: clamp(2.25rem, 4.5vh, 3.5rem);
+  border-top: 1px solid var(--rule);
+}
+
+.talk--body-only {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.talk:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.talk--featured {
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+.talk__aside { min-width: 0; }
+
+.talk__photo {
+  margin: 0 0 1.25rem;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #e7e9e3;
+}
+.talk__photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.talk__facts { margin: 0; }
+
+.talk__facts div {
+  padding-block: 0.9rem;
+}
+.talk__facts div:first-child { padding-top: 0; }
+.talk__facts div:last-child { padding-bottom: 0; }
+.talk__facts div + div {
+  border-top: 1px solid var(--rule);
+}
+
+.talk__facts dt {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 0.35rem;
+}
+
+.talk__facts dd {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.talk__badge {
+  display: block;
+  margin: 0 0 0.85rem;
+  padding: 0;
+  background: none;
+  color: var(--pitt-blue);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.talk__title {
+  font-size: clamp(1.375rem, 2.4vw, 2rem);
+  color: var(--pitt-navy);
+  margin: 0 0 1rem;
+}
+
+.talk__speaker {
+  margin: 0 0 0.15rem;
+  font-family: var(--serif);
+  font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+  font-weight: 600;
+  color: var(--ink);
+}
+.talk__speaker a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(23, 32, 42, 0.3);
+}
+.talk__speaker a:hover { color: var(--pitt-blue); text-decoration-color: var(--gold); }
+
+.talk__institution {
+  margin: 0 0 1.35rem;
+  font-size: 0.9375rem;
+  color: var(--ink-faint);
+}
+
+.talk__abstract {
+  max-width: 68ch;
+  font-size: 1.03125rem;
+  line-height: 1.74;
+  color: #232e3c;
+}
+.talk__abstract p { margin-bottom: 0.95em; }
+
+.talk__abstract-label {
+  margin: 0 0 0.6rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.talk__bio {
+  max-width: 68ch;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.9375rem;
+  line-height: 1.68;
+  color: var(--ink-soft);
+}
+
+.talk__more { margin-top: 1.5rem; }
+
+.talk__disclose { margin-top: 0.5rem; }
+.talk__disclose > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  list-style: none;
+  color: var(--pitt-blue);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--rule-strong);
+  width: fit-content;
+}
+.talk__disclose > summary::-webkit-details-marker { display: none; }
+.talk__disclose > summary::after {
+  content: "\2b";
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  line-height: 1;
+}
+.talk__disclose[open] > summary::after { content: "\2212"; }
+.talk__disclose > summary:hover { border-bottom-color: var(--gold); }
+.talk__disclose > *:not(summary) { margin-top: 1.35rem; }
+
+/* Past talks archive */
+.archive-year {
+  border-top: 1px solid var(--rule);
+}
+.archive-year:first-child { border-top: 0; }
+
+.archive-year__summary {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  cursor: pointer;
+  list-style: none;
+  padding: 1.1rem 0;
+  width: fit-content;
+}
+.archive-year__summary::-webkit-details-marker { display: none; }
+.archive-year__summary::after {
+  content: "+";
+  color: var(--pitt-blue);
+  font-size: 1.125rem;
+  line-height: 1;
+}
+.archive-year[open] > .archive-year__summary::after { content: "\2212"; }
+.archive-year__summary:hover .archive-year__label { color: var(--pitt-blue); }
+
+.archive-year__label {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--pitt-navy);
+}
+
+.archive-year__list { padding-bottom: 0.75rem; }
+
+.archive__row {
+  display: grid;
+  grid-template-columns: minmax(0, 9rem) minmax(0, 1fr);
+  gap: 0.3rem 1.75rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.archive__row:first-child { border-top: 1px solid var(--rule); }
+
+.archive__date {
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  padding-top: 0.15rem;
+}
+.archive__title {
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--pitt-navy);
+  line-height: 1.35;
+}
+.archive__who { font-size: 0.90625rem; color: var(--ink-faint); margin-top: 0.15rem; }
+
+/* -------------------------- 12. Responsive ------------------------------ */
+
+/*
+ * Short laptop screens (1366x768, 1280x720). The hero is allowed to outgrow
+ * the viewport now, but on these very common sizes it only misses by 60-90px,
+ * so easing the vertical rhythm brings the news band back above the fold
+ * without shrinking the photograph.
+ */
+@media (min-width: 901px) and (max-height: 820px) {
+  .hero__inner {
+    padding-top: calc(var(--header-h) + 0.75rem);
+    padding-bottom: 1rem;
+  }
+  .hero__pair { row-gap: 0.8rem; }
+  .hero__title { font-size: clamp(1.3rem, 1.05rem + 0.75vw, 1.6rem); }
+  .hero__lede { font-size: clamp(1.15rem, 1rem + 0.55vw, 1.35rem); }
+  .hero__cta { margin-top: 0.6rem; }
+  .news {
+    min-height: 0;
+    padding: 1.15rem 1.35rem 1.2rem;
+  }
+}
+
+/* Tablet: keep two columns but ease the grids */
+@media (max-width: 1080px) {
+  .faculty-grid { grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); }
+  .talk { grid-template-columns: minmax(0, 13rem) minmax(0, 1fr); }
+  .class-row { grid-template-columns: minmax(0, 11rem) minmax(0, 1fr); }
+  .alumni__row { grid-template-columns: minmax(0, 13rem) minmax(0, 1fr); }
+  .alumni__current { grid-column: 1 / -1; }
+  .hero__inner {
+    grid-template-columns: minmax(8.5rem, 0.7fr) minmax(0, 2.3fr);
+    gap: 1.15rem;
+  }
+}
+
+/* Collapse the hero to a single column and switch to the mobile menu */
+@media (max-width: 900px) {
+  :root { --header-h: 62px; }
+
+  .nav-toggle { display: inline-flex; }
+
+  .brand { min-height: 44px; }
+
+  .slider__dots { display: flex; }
+
+  .nav {
+    position: fixed;
+    inset: var(--header-h) 0 auto 0;
+    background: rgba(248, 248, 245, 0.98);
+    border-bottom: 1px solid var(--rule);
+    box-shadow: 0 12px 28px rgba(23, 32, 42, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.24s var(--ease), transform 0.24s var(--ease),
+                visibility 0.24s;
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    .nav { background: rgba(248, 248, 245, 0.9); backdrop-filter: blur(16px) saturate(150%); }
+  }
+  .nav.is-open { opacity: 1; visibility: visible; transform: none; }
+
+  .nav__list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.5rem var(--gutter) 1.1rem;
+  }
+  .nav__link {
+    display: block;
+    padding: 0.85rem 0;
+    font-size: 1.0625rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav__list li:last-child .nav__link { border-bottom: 0; }
+  .nav__link[aria-current] { color: var(--pitt-blue); }
+  .nav__link[aria-current]::before {
+    content: "";
+    position: absolute;
+    left: calc(-1 * var(--gutter) + 0.35rem);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 1.15rem;
+    background: var(--gold);
+  }
+
+  /*
+   * Wide-but-narrow viewports (small tablets, phones in landscape) still have
+   * room for the Cathedral beside the text. Two bugs are fixed here:
+   *   - the reserved gutter now derives from the same token as the figure
+   *     width, so the building can no longer overlap the lede;
+   *   - the figure is sized by both axes and its base is masked, so the tower
+   *     dissolves into the sky instead of being sliced off flat mid-storey.
+   */
+  .hero {
+    --cathedral-w: clamp(150px, 24vw, 210px);
+    --hero-fade: clamp(6rem, 16vh, 9rem);
+    background: linear-gradient(
+      180deg,
+      var(--sky-1) 0%, var(--sky-2) 28%, var(--sky-3) 64%,
+      var(--sky-4) 100%);
+  }
+
+  .hero__inner {
+    position: relative;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+    height: 100%;
+    min-height: 0;
+    padding: calc(var(--header-h) + 1.25rem) var(--gutter) 1.5rem;
+    align-items: stretch;
+  }
+
+  .news {
+    align-self: start;
+  }
+  .hero__figure {
+    position: absolute;
+    inset: var(--header-h) 0 auto auto;
+    width: var(--cathedral-w);
+    height: min(58vh, 470px);
+    min-height: 0;
+    display: block;
+    margin: 0;
+    justify-self: unset;
+    align-self: unset;
+    transform: none;
+    pointer-events: none;
+    z-index: 1;
+    -webkit-mask-image: linear-gradient(180deg, #000 0 58%, transparent 98%);
+            mask-image: linear-gradient(180deg, #000 0 58%, transparent 98%);
+  }
+  .hero__cathedral-stack { height: 100%; }
+  .hero__cathedral {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    object-fit: cover;
+    object-position: center top;
+  }
+  /* Leave a sky column for the floating tower beside the stacked photo
+     and news, not only beside the title. */
+  .hero__main {
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+  .hero__pair {
+    padding-right: calc(var(--cathedral-w) + 1.25rem);
+  }
+  .hero__copy {
+    padding-right: 0;
+  }
+
+  .students-grid { grid-template-columns: minmax(0, 1fr); }
+  .student-list li { padding: 0.5rem 0; }
+
+  /*
+   * Talks: the date, time, and location must not sit below a screen-and-a-half
+   * of abstract. `display: contents` lifts the aside and body children into
+   * the article's own grid so they can be reordered without touching markup.
+   */
+  .talk {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .talk__aside,
+  .talk__body { display: contents; }
+  .talk__badge { order: 1; }
+  .talk__title { order: 2; }
+  .talk__speaker { order: 3; }
+  .talk__institution { order: 4; margin-bottom: 1.1rem; }
+  .talk__facts { order: 5; margin-bottom: 1.5rem; }
+  .talk__photo { order: 6; max-width: 11rem; }
+  .talk__abstract,
+  .talk__bio,
+  .talk__more,
+  .talk__disclose { order: 7; }
+}
+
+/*
+ * Narrow portrait screens. The Cathedral is a 1:2.6 cutout, so at this width
+ * it cannot stand beside the text without crushing the column to ~200px: the
+ * lede ran to nine lines, news items to six, and the group photo rendered
+ * 202px wide. So the tower gets its own band across the full measure, cropped
+ * to the crown and spire and masked at the base, and every text block below it
+ * gets the full width back.
+ */
+@media (max-width: 680px) {
+  .hero {
+    /* Floored in rem so the spire stays legible, capped so it cannot swallow
+       the whole first screen. */
+    --cathedral-band: clamp(11rem, 28vh, 16rem);
+    height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  .hero__inner {
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 0.5rem;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+    /* The cutout has no transparent margin above the crown, so the sky above
+       the spire has to come from the layout or the tower appears to grow out
+       of the header. */
+    padding: calc(var(--header-h) + 1.75rem) var(--gutter) 1.5rem;
+  }
+  .hero__figure {
+    position: static;
+    width: 100%;
+    height: var(--cathedral-band);
+    min-height: 0;
+    display: block;
+    -webkit-mask-image: linear-gradient(180deg, #000 0 56%, transparent 97%);
+            mask-image: linear-gradient(180deg, #000 0 56%, transparent 97%);
+  }
+  /* Bounds how wide the tower itself can spread on a larger phone. */
+  .hero__cathedral-stack {
+    width: min(100%, 26rem);
+    margin-inline: auto;
+  }
+
+  .hero__copy { padding-right: 0; }
+
+  .hero__pair {
+    padding-right: 0;
+    row-gap: 1.1rem;
+  }
+  .news {
+    padding: 1.15rem 1.25rem 1.25rem;
+  }
+  /* Full measure available again, so the lede can hold a comfortable size. */
+  .hero__lede {
+    font-size: clamp(1.1875rem, 1.02rem + 1.15vw, 1.4375rem);
+    line-height: 1.4;
+    text-wrap: pretty;
+  }
+}
+
+@media (max-width: 560px) {
+  /*
+   * One column per course. `display: contents` lifts the two wrappers out so
+   * the fields can be reordered into reading order — number, title,
+   * description, then level — the same technique the talks list uses.
+   */
+  .class-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding: 1.25rem 0;
+  }
+  .class__ident,
+  .class__body { display: contents; }
+  .class__code { order: 1; }
+  .class__title { order: 2; margin-top: 0.2rem; }
+  .class__focus { order: 3; }
+  .class__note { order: 4; }
+  .class__level { order: 5; margin-top: 0.55rem; }
+
+  .faculty-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 1.25rem; }
+  .faculty-grid--compact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .faculty-list { grid-template-columns: minmax(0, 1fr); }
+  .alumni__row { grid-template-columns: minmax(0, 1fr); gap: 0.2rem; }
+  .archive__row { grid-template-columns: minmax(0, 1fr); }
+  .nav-toggle__text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+}
+
+/*
+ * Phones: one scrolling line of chips instead of a wrapped block.
+ *
+ * Fifteen areas wrap to eight rows at 390px, which pushes the names most of
+ * a screen down the page. A single line keeps the filter compact. The label
+ * stays in the page gutter on its own row; the chips scroll underneath, with
+ * a paper fade on whichever edge still has more chips — a cut-off control at
+ * the screen edge reads as missing padding, not as a scroll hint.
+ */
+@media (max-width: 700px) {
+  .area-filter__scroller {
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 0.25rem;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    padding-block: 4px;
+    scrollbar-width: none;
+  }
+  .area-filter__scroller::-webkit-scrollbar { display: none; }
+
+  /* Flex overflow eats padding-inline-end; this spacer is the end gutter
+     inside the strip so the last chip is not flush when you reach it. */
+  .area-filter__scroller::after {
+    content: "";
+    flex: 0 0 0.75rem;
+  }
+
+  .area-chip {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    padding: 0.42rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+}
+
+/* ------------------ 13. Reduced motion & print -------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .hero__figure { transform: none !important; }
+}
+
+@media print {
+  .site-header, .nav-toggle, .skip-link { display: none; }
+  body { background: #fff; }
+  .view[hidden] { display: block !important; }
+}

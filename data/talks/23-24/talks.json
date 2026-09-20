@@ -1,0 +1,89 @@
+{
+  "_note": "Talks for the 23-24 academic year. Order in this file does not matter; the site sorts by date.",
+  "talks": [
+    {
+      "speaker": "Li \"Harry\" Zhang",
+      "speaker_url": "",
+      "institution": "University of Pennsylvania",
+      "title": "Structured Event Reasoning with Large Language Models",
+      "date": "2024-04-18",
+      "time": "4:00 – 5:00 PM ET",
+      "location": "Zoom and 5th floor in 130 N Bellefield Ave",
+      "image": "",
+      "alt": "",
+      "abstract": "Reasoning about real-life events is a unifying challenge in AI and NLP that has profound utility in a variety of domains, while any fallacy in high-stake applications like law, medicine, and science could be catastrophic. Able to work with diverse text in these domains, large language models (LLMs) have proven capable of answering questions and solving problems. In this talk, I demonstrate that end-to-end LLMs still systematically fail on reasoning tasks of complex events. Moreover, their black-box nature gives rise to little interpretability and user control. To address these issues, I propose two general approaches to use LLMs in conjunction with a structured representation of events. The first is a language-based representation involving relations of sub-events that can be learned by LLMs via fine-tuning. The second is a symbolic representation involving states of entities that can be leveraged by either LLMs or deterministic solvers. On a suite of event reasoning tasks, I show that both approaches outperform end-to-end LLMs in terms of performance and trustworthiness.",
+      "bio": "Li \"Harry\" Zhang is a 5th-year PhD student working on Natural Language Processing (NLP) and artificial intelligence at the University of Pennsylvania advised by Prof. Chris Callison-Burch. He earned his Bachelor's degree at the University of Michigan mentored by Prof. Rada Mihalcea and Prof. Dragomir Radev. He has published more than 20 papers in NLP conferences that have been cited more than 1,000 times. He has reviewed more than 50 papers in those venues and has served as Session Chair and Program Chair in many conferences and workshops. Being also a musician, producer, content creator of over 50,000 subscribers, he is passionate in the research of AI music.",
+      "url": ""
+    },
+    {
+      "speaker": "Joel Tetreault",
+      "speaker_url": "",
+      "institution": "Dataminr",
+      "title": "A Brief History of Natural Language Processing",
+      "date": "2024-04-11",
+      "time": "4:00 – 5:00 PM ET",
+      "location": "Zoom and 5th floor in 130 N Bellefield Ave",
+      "image": "",
+      "alt": "",
+      "abstract": "The title says it all! As the field of Natural Language Processing (NLP) continues to make incredible strides and advancements, it's important to take a step back and use the past to understand the current transformations. Drawing from literature and interviews, we'll dive into the early years of NLP and explore some of the major themes, trends, and personalities that paved the way for the cutting-edge technology we have today.",
+      "bio": "Joel Tetreault is VP of Research at Dataminr, a company that provides updates on breaking events across the world in real-time. His background is in AI, specifically Natural Language Processing and Machine Learning, and using techniques from those fields to solve real-world problems such as automatic essay scoring, grammatical error correction, hate speech detection, real-time event detection, and dialogue systems, AI for Good, among others. Prior to joining Dataminr, he led research groups at Grammarly, Nuance, and Educational Testing Service, and was a Senior Research Scientist at Yahoo Labs. Joel was one of the program chairs of ACL 2020 and also one of the longest-serving members of the NAACL Board where he was Treasurer for six years. Additionally, he was a long-time organizer of the Building Educational Application workshop series (10+ years) and organized workshops on Generation, AI for Social Good, Abusive Language, Metaphor and Event Detection.",
+      "url": ""
+    },
+    {
+      "speaker": "Ana Marasović",
+      "speaker_url": "",
+      "institution": "University of Utah",
+      "title": "",
+      "date": "2024-04-04",
+      "time": "4:00 – 5:00 PM ET",
+      "location": "Zoom and 5th floor in 130 N Bellefield Ave",
+      "image": "",
+      "alt": "",
+      "abstract": "",
+      "bio": "Ana Marasović is an Assistant Professor in the Kahlert School of Computing at the University of Utah. Her primary research interests are at the confluence of natural language processing (NLP), explainable artificial intelligence (XAI), and multimodality. She is interested in projects that (1) rigorously validate AI technologies, and (2) make human interaction with AI more intuitive. For an example of robust validation check out her work on carefully designing benchmarks to validate the robustness of QA models in the presence of common linguistic phenomena such as negation or coreference. On the other hand, to help people create a mental model about how to interact with AI, she has contributed to building models that self-explain their predictions in a way that is easily understandable to people, for example by saying why did the model give this answer instead of another one (contrastive explanations) or by telling in plain language the gist of its reasoning (free-text explanations). Moving forward, she is excited to evaluate and improve such models with application-grounded, human-subject evaluations. Previously, Ana Marasović was a Young Investigator at the Allen Institute for AI from 2019–2022 where she worked with Noah A. Smith and Yejin Choi. During that time she also had a courtesy appointment in the Paul G. Allen School of Computer Science & Engineering at the University of Washington. Ana Marasović received her Ph.D. degree at Heidelberg University, where she was advised by Anette Frank. Before receiving her PhD in 2019, she completed her B.Sc. (2013) and M.Sc. (2015) in Mathematics at the University of Zagreb.",
+      "url": ""
+    },
+    {
+      "speaker": "Muhammad Khalifa",
+      "speaker_url": "",
+      "institution": "University of Michigan in Ann Arbor",
+      "title": "",
+      "date": "2024-03-21",
+      "time": "4:00 – 5:00 PM ET",
+      "location": "Zoom and 5th floor in 130 N Bellefield Ave",
+      "image": "",
+      "alt": "",
+      "abstract": "",
+      "bio": "Muhammad Khalifa is a third-year PhD candidate at the University of Michigan in Ann Arbor and an intern at Ai2. He is advised by Lu Wang and Honglak Lee. His main research interests are Large Language Models, Reasoning, and Controlled Generation. He spent 10 months at Amazon AI working with Miguel Ballesteros and Kathy Mckeown on multiple projects including Dialogue Summarization and Semi-structured documents understanding. Prior to that, hw was an intern at Naver Labs Europe where he worked on Controllable Text Generation and Energy-based models with Hady Elsahar and Marc Dymetman.",
+      "url": ""
+    },
+    {
+      "speaker": "Aaron Mueller",
+      "speaker_url": "",
+      "institution": "Khoury College of Computer Sciences, Northeastern University",
+      "title": "Evaluating and Surgically Improving Generalization in Language Models",
+      "date": "2024-02-29",
+      "time": "4:00 – 5:00 PM ET",
+      "location": "Zoom and 5th floor in 130 N Bellefield Ave",
+      "image": "",
+      "alt": "",
+      "abstract": "As language models (LMs) are deployed in wider applications, understanding and controlling how they generalize becomes increasingly important. However, it is difficult to directly evaluate how models are accomplishing the tasks we give them—and when needed, it is not obvious how to improve generalization on a task without destroying general capabilities. In this talk, I will present two projects that tackle these challenges. I will first present an evaluation of how models process language structure: we evaluate out-of-domain generalization in in-context learning settings, finding that pre-training on code may result in more robust generalization. We also find that chain-of-thought (CoT) results can be misleading: CoT often only improves in-distribution performance without improving out-of-distribution performance. Then, I will present an ongoing mechanistic interpretability effort to isolate and control the algorithms LMs implement via feature circuits. By learning sparse human-interpretable encodings of models’ hidden states (features) and discovering circuits on them, we observe how LMs perform subject-verb agreement: by composing representations of grammatical number in the MLPs and residuals, while detecting and learning to ignore distractor clauses in the attention heads. I will conclude by showing an application of feature circuits—ablating spurious features to improve the generalization of a classifier.",
+      "bio": "Aaron Mueller is a Zuckerman postdoctoral fellow working with David Bau (Northeastern U.) and Yonatan Belinkov (Technion). He obtained his PhD from Johns Hopkins University supervised by Tal Linzen. His work spans topics in the intersection of natural language processing and psycholinguistics, including causal interpretability, NLP evaluations inspired by linguistic principles, and efficient language acquisition. He was an NSF Graduate Fellow, and has received an Outstanding Paper Award from ACL (2023), a Featured Paper recognition from TMLR (2023), and coverage in the New York Times as an organizer of the BabyLM Challenge.",
+      "url": ""
+    },
+    {
+      "speaker": "Zhijing Jin",
+      "speaker_url": "",
+      "institution": "Max Planck Institute & ETH",
+      "title": "Causal Inference for Robust, Reliable, and Responsible NLP",
+      "date": "2024-02-15",
+      "time": "4:00 – 5:00 PM ET",
+      "location": "",
+      "image": "",
+      "alt": "",
+      "abstract": "Despite the remarkable progress in large language models (LLMs), it is well-known that natural language processing (NLP) models tend to fit for spurious correlations, which can lead to unstable behavior under domain shifts or adversarial attacks. In my research, I develop a causal framework for robust and fair NLP, which investigates the alignment of the causality of human decision-making and model decision-making mechanisms. Under this framework, I develop a suite of stress tests for NLP models across various tasks, such as text classification, natural language inference, and math reasoning; and I propose to enhance robustness by aligning model learning direction with the underlying data generating direction. Using this causal inference framework, I also test the validity of causal and logical reasoning in models, with implications for fighting misinformation, and also extend the impact of NLP by applying it to analyze the causality behind social phenomena important for our society, such as causal analysis of policies, and measuring gender bias in our society. Together, I develop a roadmap towards socially responsible NLP by ensuring the reliability of models, and broadcasting its impact to various social applications.",
+      "bio": "Zhijing Jin (she/her) is a Ph.D. candidate at Max Planck Institute & ETH. Her research focuses on socially responsible NLP by causal inference. Specifically, she works on expanding the impact of NLP by promoting NLP for social good, and developing CausalNLP to improve robustness, fairness, and interpretability of NLP models, as well as analyze the causes of social problems. She has published at many NLP and AI venues (e.g., ACL, EMNLP, NAACL, NeurIPS, AAAI, AISTATS). Her work has been featured in MIT News, ACM TechNews, and Synced. She is actively involved in AI for social good, as the co-organizer of three NLP for Positive Impact Workshops (at ACL 2021, EMNLP 2022, and EMNLP 2024), Moral AI Workshop at NeurIPS 2023, and RobustML Workshop at ICLR 2021. To support the NLP research community, she organizes the ACL Year-Round Mentorship Program. To foster the causality research community, she organized the Tutorial on CausalNLP at EMNLP 2022, and served as the Publications Chair for the 1st conference on Causal Learning and Reasoning (CLeaR). More information can be found on her personal website: zhijing-jin.com",
+      "url": ""
+    }
+  ]
+}

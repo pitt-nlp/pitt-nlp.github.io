@@ -1,0 +1,7 @@
+.vercel
+node_modules
+.playwright
+tmp-*.png
+images/_faculty-check.png
+.DS_Store
+Thumbs.db

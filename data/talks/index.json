@@ -1,0 +1,13 @@
+{
+  "_note": "Seminar listings split by academic year (August-July). Add a year to `years` and put its talks in data/talks/<yy-yy>/talks.json. The site loads every listed year, splits Upcoming vs Past from each talk date (America/New_York), and sorts them. Fields: speaker, speaker_url, institution, title, date (YYYY-MM-DD), time, location, image, alt, abstract, bio, url.",
+  "series": {
+    "name": "Pitt NLP+CL Seminar",
+    "blurb": "The group hosts an open seminar during the fall and spring terms. Talks are usually held in person on the Pittsburgh campus and streamed over Zoom."
+  },
+  "years": [
+    "26-27",
+    "25-26",
+    "24-25",
+    "23-24"
+  ]
+}

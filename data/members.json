@@ -212,12 +212,6 @@
           "areas": ["Text Summarization", "Discourse & Argumentation", "Multimodal Learning"]
         },
         {
-          "name": "Shayan Peyghambari Oskoui",
-          "title": "PhD",
-          "website": "https://www.linkedin.com/in/shayan-peyghambari-002659196/",
-          "areas": ["NLP for Education", "LLM Evaluation"]
-        },
-        {
           "name": "Bhiman Kumar Baghel",
           "title": "PhD",
           "website": "https://bhimanbaghel.github.io/",
@@ -312,6 +306,15 @@
         "current": "Senior Applied Scientist, Zillow Group",
         "website": "https://engsalem.github.io/",
         "areas": ["Text Summarization", "Discourse & Argumentation"]
+      },
+      {
+        "name": "Shayan Peyghambari Oskoui",
+        "year": "2026",
+        "degree": "MSc",
+        "department": "CS",
+        "current": "Software Engineer, Morph Systems",
+        "website": "https://www.linkedin.com/in/shayan-peyghambari-002659196/",
+        "areas": ["NLP for Education", "LLM Evaluation"]
       },
       {
         "name": "César Guerra-Solano",

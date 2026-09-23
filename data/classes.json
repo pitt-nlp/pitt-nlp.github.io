@@ -3,6 +3,12 @@
 
   "courses": [
     {
+      "numbers": "CERTIFICATE",
+      "title": "Certificate in Computational Linguistics",
+      "url": "https://www.asundergrad.pitt.edu/academics/certificate-programs/certificate-computational-linguistics",
+      "focus": "A structured program of NLP and computational linguistics coursework completed alongside a bachelor's degree."
+    },
+    {
       "numbers": "CS 1671 / CS 2071",
       "title": "Human Language Technologies",
       "url": "https://courses.sci.pitt.edu/courses/view/CS-1671",
